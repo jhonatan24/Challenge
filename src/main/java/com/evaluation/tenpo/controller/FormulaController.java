@@ -1,14 +1,20 @@
 package com.evaluation.tenpo.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.evaluation.tenpo.dto.FormulaDTO;
+import com.evaluation.tenpo.dto.FormulaResultDTO;
+import com.evaluation.tenpo.service.FormulaService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/formula")
+@Slf4j
 public class FormulaController {
-    @GetMapping
-    public String getHola(){
-        return "hola mundo";
+
+    private FormulaService formulaService;
+
+    @PostMapping("/calculate")
+    public FormulaResultDTO calculate(@RequestBody FormulaDTO formulaDTO){
+      return  formulaService.calculated(formulaDTO);
     }
 }
