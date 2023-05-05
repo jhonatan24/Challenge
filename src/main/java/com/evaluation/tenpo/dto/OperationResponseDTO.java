@@ -5,6 +5,6 @@ import lombok.Data;
 
 @Data
 @Builder
-public class FormulaResultDTO {
+public class OperationResponseDTO {
     private Integer result;
 }

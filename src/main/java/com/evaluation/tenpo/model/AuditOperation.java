@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 @Entity
 @Builder
-public class AuditFormula {
+public class AuditOperation {
 
     @Id
     @GeneratedValue
