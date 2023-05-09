@@ -6,13 +6,14 @@ import com.evaluation.tenpo.dto.PercentageDTO;
 import com.evaluation.tenpo.exception.DataNotAvailableException;
 import com.evaluation.tenpo.exception.RemoteServiceNotAvailableException;
 import com.evaluation.tenpo.repository.PercentageRepository;
+import com.evaluation.tenpo.service.OperationService;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-public class OperationServiceImpl implements com.evaluation.tenpo.service.OperationService {
+public class OperationServiceImpl implements OperationService {
 
   private final PercentageRepository repository;
   
