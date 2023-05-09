@@ -14,9 +14,9 @@ import lombok.*;
 public class OperationRequestDTO {
     @NotNull(message=REQUIRED)
     @Min(value = 1,message = REQUIRED)
-    private Integer valueA;
+    private double valueA;
     @NotNull(message = REQUIRED)
     @Min(value = 1,message = REQUIRED)
-    private Integer valueB;
+    private double valueB;
 }
 

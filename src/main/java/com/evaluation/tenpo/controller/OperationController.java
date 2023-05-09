@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/operation")
 @Slf4j
 public class OperationController  {
+    
 
     private OperationService operationService;
 
@@ -25,7 +26,7 @@ public class OperationController  {
     @PostMapping("/calculate")
     @RateLimiter(name="operationCalculate")
     public OperationResponseDTO calculate(@Validated @RequestBody OperationRequestDTO operationDTO) throws DataNotAvailableException, RemoteServiceNotAvailableException {
-      return  operationService.calculated(operationDTO);
+        return  operationService.calculated(operationDTO);
     }
 
 

@@ -15,16 +15,11 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 @WebMvcTest(value = PercentageClientImpl.class,excludeFilters= @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = AuditRequestFilter.class))
 @ExtendWith(MockitoExtension.class)
-@TestPropertySource(
-    properties = {
-      "app.percentage.hostname=http://localhost:8090/",
-    })
 class PercentageClientImplTest {
 
   @Autowired private PercentageClientImpl percentageClient;

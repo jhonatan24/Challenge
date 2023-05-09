@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class OperationServiceImpl implements com.evaluation.tenpo.service.OperationService {
 
   private final PercentageRepository repository;
-
+  
   public OperationServiceImpl(PercentageRepository repository) {
     this.repository = repository;
   }
@@ -26,13 +26,16 @@ public class OperationServiceImpl implements com.evaluation.tenpo.service.Operat
     if (infoPercentage.isEmpty()) {
       throw new DataNotAvailableException("no se pudo efectuar la operacion");
     }
-    Integer result = this.sum(formulaDTO.getValueA(), formulaDTO.getValueB(), infoPercentage.get().getPercentage());
+    double result = this.sum(formulaDTO.getValueA(), formulaDTO.getValueB(), infoPercentage.get().getPercentage());
     repository.saveHistoryPercentage(infoPercentage.get(),formulaDTO,result);
     return OperationResponseDTO.builder().result(result).build();
   }
 
-  private Integer sum(Integer a, Integer b, Integer percentage) {
-    return a + b + percentage;
+  private double sum(double a, double b, double servicePercentage) {
+    log.info("service info {}",servicePercentage);
+    var sum = Double.sum(a,b);
+    var percentage = servicePercentage/100;
+    return (sum * percentage) + sum;
   }
   
 }

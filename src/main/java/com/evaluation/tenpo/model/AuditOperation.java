@@ -17,8 +17,8 @@ public class AuditOperation {
     @Id
     @GeneratedValue
     private Long id;
-    private List<Integer> value;
-    private Integer resul;
+    private List<Double> value;
+    private double resul;
     private Integer percentage;
     private LocalDateTime createDate;
 }

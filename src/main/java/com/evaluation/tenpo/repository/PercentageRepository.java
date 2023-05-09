@@ -8,5 +8,5 @@ import java.util.Optional;
 
 public interface PercentageRepository {
   Optional<PercentageDTO> getPercentage() throws RemoteServiceNotAvailableException;
-  void saveHistoryPercentage(PercentageDTO dto, OperationRequestDTO request, Integer result);
+  void saveHistoryPercentage(PercentageDTO dto, OperationRequestDTO request, double result);
 }

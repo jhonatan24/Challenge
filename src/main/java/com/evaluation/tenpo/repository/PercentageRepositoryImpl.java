@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.retry.ExhaustedRetryException;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Recover;
 import org.springframework.retry.annotation.Retryable;
@@ -28,16 +30,17 @@ public class PercentageRepositoryImpl implements PercentageRepository {
     }
 
     @Override
+    @Cacheable(value = "percentage")
     @Retryable(
-            value = RemoteServiceNotAvailableException.class,
+            value = {RemoteServiceNotAvailableException.class,ExhaustedRetryException.class},
             maxAttempts = 3,
             backoff = @Backoff(delay = 1000))
     public Optional<PercentageDTO> getPercentage() throws RemoteServiceNotAvailableException {
-       return Optional.ofNullable(percentageClient.getPercentage()).or(this::findLastPercentage);
+        return Optional.ofNullable(percentageClient.getPercentage()).or(this::findLastPercentage);
     }
 
     @Recover
-    private Optional<PercentageDTO> failGetPercentage(RemoteServiceNotAvailableException ex){
+    private Optional<PercentageDTO> failGetPercentage(Exception ex){
         log.error("fails call getPercentage",ex);
         return findLastPercentage();
     }
@@ -52,7 +55,7 @@ public class PercentageRepositoryImpl implements PercentageRepository {
     }
 
     @Override
-    public void saveHistoryPercentage(PercentageDTO dto, OperationRequestDTO request, Integer result) {
+    public void saveHistoryPercentage(PercentageDTO dto, OperationRequestDTO request, double result) {
         CompletableFuture.runAsync(
                 () -> {
                     var model =

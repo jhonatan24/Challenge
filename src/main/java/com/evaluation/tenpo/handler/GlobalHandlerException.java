@@ -17,10 +17,10 @@ public class GlobalHandlerException {
 
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
   @ExceptionHandler(value = DataNotAvailableException.class)
-  protected Error dataNotFound(RuntimeException ex) {
+  protected Error dataNotFound(DataNotAvailableException ex) {
     return Error.builder()
         .timestamp(new Timestamp(System.currentTimeMillis()))
-            .status(HttpStatus.BAD_REQUEST.value())
+            .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
         .message(List.of(ex.getMessage()))
         .build();
   }

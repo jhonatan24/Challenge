@@ -1,6 +1,7 @@
 package com.evaluation.tenpo.repository;
 
 import com.evaluation.tenpo.client.PercentageClient;
+import com.evaluation.tenpo.config.RetryConfig;
 import com.evaluation.tenpo.dto.PercentageDTO;
 import com.evaluation.tenpo.exception.RemoteServiceNotAvailableException;
 import com.evaluation.tenpo.model.AuditOperation;
@@ -9,17 +10,19 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@SpringBootTest
-@ExtendWith(MockitoExtension.class)
+@AutoConfigureMockMvc
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = {PercentageRepositoryImpl.class, RetryConfig.class})
 class PercentageRepositoryTest {
-    
+
     @Autowired
-    private PercentageRepositoryImpl percentageRepository;
+    private PercentageRepository percentageRepository;
     @MockBean
     private PercentageClient percentageClient;
     @MockBean private AuditOperationRepository auditOperationRepository;
@@ -70,8 +73,4 @@ class PercentageRepositoryTest {
         Mockito.verify(auditOperationRepository,Mockito.times(1)).findLastCreateDate();
     }
     
-    @Test
-    void saveHistoryPercentage() {
-        
-    }
 }

@@ -26,12 +26,13 @@ class OperationServiceTest {
 
   @Test
   void calculatedWhenAllOk() throws  DataNotAvailableException, RemoteServiceNotAvailableException {
-    PercentageDTO percentageDTO = PercentageDTO.builder().createDate(LocalDateTime.now()).percentage(34).build();
+    PercentageDTO percentageDTO = PercentageDTO.builder().createDate(LocalDateTime.now()).percentage(10).build();
     Mockito.when(repository.getPercentage()).thenReturn(Optional.of(percentageDTO));
-    var resul = operationService.calculated(OperationRequestDTO.builder().valueA(23).valueB(43).build());
+    var resul = operationService.calculated(OperationRequestDTO.builder().valueA(5).valueB(5).build());
     Assertions.assertNotNull(resul);
     Assertions.assertNotNull(resul.getResult());
-    Mockito.verify(repository,Mockito.times(1)).saveHistoryPercentage(Mockito.any(),Mockito.any(),Mockito.any());
+    Assertions.assertEquals(resul.getResult(),11);
+    Mockito.verify(repository,Mockito.times(1)).saveHistoryPercentage(Mockito.any(),Mockito.any(),Mockito.anyDouble());
   }
   
   @Test
@@ -40,7 +41,7 @@ class OperationServiceTest {
     Assertions.assertThrows(DataNotAvailableException.class,()->{
       operationService.calculated(OperationRequestDTO.builder().valueA(23).valueB(43).build());
     });
-    Mockito.verify(repository,Mockito.never()).saveHistoryPercentage(Mockito.any(),Mockito.any(),Mockito.any());
+    Mockito.verify(repository,Mockito.never()).saveHistoryPercentage(Mockito.any(),Mockito.any(),Mockito.anyDouble());
   }
   
 
