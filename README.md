@@ -31,6 +31,7 @@ Tu código debe estar disponible en un repositorio público, junto con las instr
 
 Tener en cuenta que la aplicación funcionará de la forma de un sistema distribuido donde puede existir más de una réplica del servicio funcionando en paralelo.
 
+
 ## Clone
 ```
 git clone git@github.com:jhonatan24/Challenge.git
@@ -44,10 +45,16 @@ cd tenpo/
 ```
 
 ## Run
+ Para levantar todas las aplicaciones ejecutar el siguiente comando:
+```
+cd tenpo/
+docker compose  --profile=DEV up
+```
+si solo deseas levantar el redis, base de datos y la aplicacion secundaria
 
 ```
 cd tenpo/
-docker-compose up
+docker compose  up
 ```
 
 ##### swagger
